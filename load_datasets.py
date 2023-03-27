@@ -70,7 +70,7 @@ def load_iris_dataset(train_ratio):
        
     
     # Tres important : la fonction doit retourner 4 matrices (ou vecteurs) de type Numpy. 
-    return (train, train_labels, test, test_labels)
+    return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 	
 	
 	
@@ -127,7 +127,7 @@ def load_wine_dataset(train_ratio):
         current_record_count += 1
 
 	# La fonction doit retourner 4 structures de données de type Numpy.
-    return (train, train_labels, test, test_labels)
+    return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 
 def load_abalone_dataset(train_ratio):
     """
@@ -180,4 +180,4 @@ def load_abalone_dataset(train_ratio):
         current_record_count += 1
 
 
-    return (train, train_labels, test, test_labels)
+    return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
