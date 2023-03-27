@@ -31,11 +31,34 @@ def load_iris_dataset(train_ratio):
     # Vous pouvez utiliser des valeurs numériques pour les différents types de classes, tel que :
     conversion_labels = {'Iris-setosa': 0, 'Iris-versicolor' : 1, 'Iris-virginica' : 2}
     
-    # Le fichier du dataset est dans le dossier datasets en attaché 
-    f = open('datasets/bezdekIris.data', 'r')
-    
-    
-    # TODO : le code ici pour lire le dataset
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    iris_file = 'datasets/bezdekIris.data'
+    iris_data_records = []
+    with open(iris_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            # Convert labels
+            columns[4] = conversion_labels[columns[4]]
+            iris_data_records.append(columns)
+
+    # Randomize data order
+    random.shuffle(iris_data_records)
+
+    train = []
+    train_labels = []
+    test = []
+    test_labels = []
+    training_threshold = int(len(iris_data_records) * train_ratio)
+    current_record_count = 0
+    for record in iris_data_records:
+        data_label = record.pop()
+        if current_record_count < training_threshold:
+            train.append(record)
+            train_labels.append(data_label)
+        else:
+            test.append(record)
+            test_labels.append(data_label)
+        current_record_count += 1
     
     # REMARQUE très importante : 
 	# remarquez bien comment les exemples sont ordonnés dans 
@@ -76,13 +99,33 @@ def load_wine_dataset(train_ratio):
     
     random.seed(1) # Pour avoir les meme nombres aléatoires à chaque initialisation.
 
-    # Le fichier du dataset est dans le dossier datasets en attaché 
-    f = open('datasets/binary-winequality-white.csv', 'r')
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    wine_file = 'datasets/binary-winequality-white.csv'
+    wine_data_records = []
+    with open(wine_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            wine_data_records.append(columns)
 
-	
-    # TODO : le code ici pour lire le dataset
-    
-	
+    # Randomize data order
+    random.shuffle(wine_data_records)
+
+    train = []
+    train_labels = []
+    test = []
+    test_labels = []
+    training_threshold = int(len(wine_data_records) * train_ratio)
+    current_record_count = 0
+    for record in wine_data_records:
+        data_label = record.pop()
+        if current_record_count < training_threshold:
+            train.append(record)
+            train_labels.append(data_label)
+        else:
+            test.append(record)
+            test_labels.append(data_label)
+        current_record_count += 1
+
 	# La fonction doit retourner 4 structures de données de type Numpy.
     return (train, train_labels, test, test_labels)
 
@@ -109,5 +152,32 @@ def load_abalone_dataset(train_ratio):
         - test_labels : contient les étiquettes pour chaque exemple dans test, de telle sorte
           que : test_labels[i] est l'etiquette pour l'exemple test[i]
     """
-    f = open('datasets/abalone-intervalles.csv', 'r') # La fonction doit retourner 4 matrices (ou vecteurs) de type Numpy.
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    abalone_file = 'datasets/abalone-intervalles.csv'
+    abalone_data_records = []
+    with open(abalone_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            abalone_data_records.append(columns)
+
+    # Randomize data order
+    random.shuffle(abalone_data_records)
+
+    train = []
+    train_labels = []
+    test = []
+    test_labels = []
+    training_threshold = int(len(abalone_data_records) * train_ratio)
+    current_record_count = 0
+    for record in abalone_data_records:
+        data_label = record.pop()
+        if current_record_count < training_threshold:
+            train.append(record)
+            train_labels.append(data_label)
+        else:
+            test.append(record)
+            test_labels.append(data_label)
+        current_record_count += 1
+
+
     return (train, train_labels, test, test_labels)
