@@ -23,7 +23,7 @@ class Classifier: #nom de la class à changer
 		Vous pouvez passer d'autre paramètres au besoin,
 		c'est à vous d'utiliser vos propres notations
 		"""
-		self.possibleClasses:list[str] = []
+		self.possibleClasses:set[str] = []
 		
 		
 	def train(self, train, train_labels): #vous pouvez rajouter d'autres attributs au besoin
@@ -47,7 +47,7 @@ class Classifier: #nom de la class à changer
 		"""
         
 	def predictArray(self, data:np.ndarray) -> np.ndarray:
-		results = np.zeros((np.shape(data)[0], 1))
+		results = np.empty((np.shape(data)[0], 1), dtype=int)
 		i:np.ndarray
 		for index, row in enumerate(data):
 			result = self.predict(row)
@@ -71,7 +71,8 @@ class Classifier: #nom de la class à changer
 		prediction_results = self.predictArray(evaluation_data)
 		for i in self.possibleClasses:
 			class_recognition[i] = rates.copy()
-		for index, result in enumerate(prediction_results):
+		for index, resultasArray in enumerate(prediction_results):
+			result = resultasArray.item()
 			real_class = evaluation_labels[index]
 			if result == real_class:
 				for i in class_recognition:
@@ -89,9 +90,10 @@ class Classifier: #nom de la class à changer
 						class_recognition[i]["TN"] += 1
 		
 		v:dict
+		print(class_recognition)
 		for k, v in class_recognition.items():
 			print(f"Evaluation metrics for {k}\n")
-			accuracy = (v["TP"] + v["TN"])/(sum(v.values))
+			accuracy = (v["TP"] + v["TN"])/(sum(v.values()))
 			print(f"Accuracy: {accuracy}\n")
 			precision = (v["TP"])/(v["TP"] + v["FP"])
 			print(f"Precision: {precision}\n")
@@ -99,17 +101,13 @@ class Classifier: #nom de la class à changer
 			print(f"Recall: {recall}\n")
 			f1score = 2 * ((precision * recall) / (precision + recall))
 			print(f"F1-score: {f1score}\n")
-			print("Confusion matrix \n")
+			print("Confusion matrix")
 			matrix = f""" 
-							Predicted
-					Positive	|	Negative
-				|---------------|---------------|
-		Positive|   {v["TP"]}   |   {v["FN"]}   |
-Actual  --------|---------------|---------------|
-				|---------------|---------------|
-		Negative|   {v["FP"]}   |   {v["TN"]}   |
-				|---------------|---------------|"""
+			    Predicted
+		    Positive	|   Negative
+		|---------------|---------------|
+	Positive|	{v["TP"]}	|	{v["FN"]}	|
+Actual		|---------------|---------------|
+	Negative|	{v["FP"]}	|	{v["TN"]}	|
+		|---------------|---------------|"""
 			print(matrix)
-
-	# Vous pouvez rajouter d'autres méthodes et fonctions,
-	# il suffit juste de les commenter.

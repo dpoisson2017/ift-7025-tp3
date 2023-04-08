@@ -1,8 +1,7 @@
 import numpy as np
 import sys
 import load_datasets
-import NaiveBayes # importer la classe du classifieur bayesien
-import Knn # importer la classe du Knn
+from knn import Knn # importer la classe du Knn
 #importer d'autres fichiers et classes si vous en avez développés
 
 
@@ -19,23 +18,25 @@ En gros, vous allez :
 
 # Initialisez vos paramètres
 
+k = 5
 
 
 
+# Initialisez/instanciez vos classificateurs avec leurs paramètres
 
-# Initialisez/instanciez vos classifieurs avec leurs paramètres
-
-
+knneighbours = Knn(k=k)
 
 
 
 # Charger/lire les datasets
 
-
+iris_train, iris_train_label, iris_test, iris_test_label = load_datasets.load_iris_dataset(0.8)
 
 
 # Entrainez votre classifieur
 
+knneighbours.train(iris_train.astype(float, copy=False), iris_train_label)
+knneighbours.evaluate(iris_train.astype(float, copy=False), iris_train_label)
 
 """
 Après avoir fait l'entrainement, évaluez votre modèle sur 

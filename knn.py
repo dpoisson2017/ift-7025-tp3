@@ -25,6 +25,9 @@ class Knn(Classifier): #nom de la class à changer
 		Vous pouvez passer d'autre paramètres au besoin,
 		c'est à vous d'utiliser vos propres notations
 		"""
+		self.training_data: np.ndarray
+		self.training_labels: np.ndarray
+		self.k_threshold = kwargs['k']
 		
 	def train(self, train, train_labels): #vous pouvez rajouter d'autres attributs au besoin
 		"""
@@ -39,12 +42,42 @@ class Knn(Classifier): #nom de la class à changer
 		les expliquer en commentaire
 		
 		"""
+		self.training_data = train
+		self.training_labels = train_labels
+		self.possibleClasses = set(train_labels)
+
         
 	def predict(self, x):
 		"""
 		Prédire la classe d'un exemple x donné en entrée
 		exemple est de taille 1xm
 		"""
-        
-	# Vous pouvez rajouter d'autres méthodes et fonctions,
-	# il suffit juste de les commenter.
+		distances:list[tuple(float, str)] = []
+		#Could be optimised but first draft
+		for index, row in enumerate(self.training_data):
+			distance = calculateDistance(x, row)
+			label = self.training_labels[index]
+			distances.append((distance, label))
+		distances.sort()
+
+		nearest_neighbours = {}
+		for i in self.possibleClasses:
+			nearest_neighbours[i] = 0
+
+		for i in distances:
+			nearest_neighbours[i[1]] += 1
+			if nearest_neighbours[i[1]] >= self.k_threshold:
+				return i[1]
+		
+		raise RuntimeError('Not enough training data for the k threshold of nearest neigbours')
+
+def calculateDistance(x:np.ndarray, y:np.ndarray):
+	numberColumns = x.size
+	if numberColumns != y.size:
+		raise RuntimeError('Inegal number of columns')
+	distance:float = 0.0
+	for i in range(numberColumns):
+		distance += (x[i] - y[i])**2
+	return distance
+
+
