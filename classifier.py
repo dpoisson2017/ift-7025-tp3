@@ -94,20 +94,20 @@ class Classifier: #nom de la class à changer
 		for k, v in class_recognition.items():
 			print(f"Evaluation metrics for {k}\n")
 			accuracy = (v["TP"] + v["TN"])/(sum(v.values()))
-			print(f"Accuracy: {accuracy}\n")
+			print(f"Accuracy: {accuracy}")
 			precision = (v["TP"])/(v["TP"] + v["FP"])
-			print(f"Precision: {precision}\n")
+			print(f"Precision: {precision}")
 			recall = (v["TP"])/(v["TP"] + v["FN"])
-			print(f"Recall: {recall}\n")
+			print(f"Recall: {recall}")
 			f1score = 2 * ((precision * recall) / (precision + recall))
-			print(f"F1-score: {f1score}\n")
+			print(f"F1-score: {f1score}")
 			print("Confusion matrix")
 			matrix = f""" 
-			    Predicted
-		    Positive	|   Negative
-		|---------------|---------------|
-	Positive|	{v["TP"]}	|	{v["FN"]}	|
-Actual		|---------------|---------------|
-	Negative|	{v["FP"]}	|	{v["TN"]}	|
-		|---------------|---------------|"""
+	    Predicted
+    Positive	|    Negative
+|---------------|---------------|
+|	{v["TP"]}	|	{v["FN"]}	| Positive
+|---------------|---------------|		Actual
+|	{v["FP"]}	|	{v["TN"]}	| Negative
+|---------------|---------------|\n"""
 			print(matrix)
