@@ -1,8 +1,9 @@
 import numpy as np
 import sys
 import load_datasets
-import NaiveBayes # importer la classe du classifieur bayesien
-import Knn # importer la classe du Knn
+from knn import Knn # importer la classe du 
+from sklearn.neighbors import KNeighborsClassifier
+import sklearn.metrics
 #importer d'autres fichiers et classes si vous en avez développés
 
 
@@ -19,24 +20,25 @@ En gros, vous allez :
 
 # Initialisez vos paramètres
 
+k = 5
 
 
 
+# Initialisez/instanciez vos classificateurs avec leurs paramètres
 
-# Initialisez/instanciez vos classifieurs avec leurs paramètres
-
-
-
+knneighbours = Knn(k=k)
+scikit_knn = KNeighborsClassifier()
 
 
 # Charger/lire les datasets
 
-
+abalone_train, abalone_train_label, abalone_test, abalone_test_label = load_datasets.load_abalone_dataset(0.8)
 
 
 # Entrainez votre classifieur
 
-
+knneighbours.train(abalone_train.astype(float, copy=False), abalone_train_label)
+scikit_knn.fit(abalone_train.astype(float), abalone_train_label)
 """
 Après avoir fait l'entrainement, évaluez votre modèle sur 
 les données d'entrainement.
@@ -48,7 +50,9 @@ IMPORTANT :
     - le rappel (recall)
     - le F1-score
 """
-
+knneighbours.evaluate(abalone_train.astype(float, copy=False), abalone_train_label)
+results = scikit_knn.predict(abalone_train.astype(float, copy=False))
+print(f"mean accuracy with sklearn knn: {sklearn.metrics.accuracy_score(abalone_train_label, results)}")
 
 
 
@@ -67,6 +71,7 @@ IMPORTANT :
     - le F1-score
 """
 
+knneighbours.evaluate(abalone_test.astype(float, copy=False), abalone_test_label)
 
 
 
