@@ -8,6 +8,7 @@ vous pouvez rajouter d'autres méthodes qui peuvent vous etre utiles, mais la co
 se fera en utilisant les méthodes train, predict et evaluate de votre code.
 """
 
+from math import sqrt
 import numpy as np
 
 from classifier import Classifier
@@ -59,11 +60,9 @@ class Knn(Classifier): #nom de la class à changer
 			label = self.training_labels[index]
 			distances.append((distance, label))
 		distances.sort()
-
 		nearest_neighbours = {}
 		for i in self.possibleClasses:
 			nearest_neighbours[i] = 0
-
 		for i in range(self.k_neighbors):
 			value = distances[i]
 			nearest_neighbours[value[1]] += 1
@@ -73,15 +72,12 @@ class Knn(Classifier): #nom de la class à changer
 		for k, v in nearest_neighbours.items():
 			if v > maxValue:
 				maxClass = k
+				maxValue = v
 		return maxClass
 
 def calculateDistance(x:np.ndarray, y:np.ndarray):
 	numberColumns = x.size
 	if numberColumns != y.size:
 		raise RuntimeError('Inegal number of columns')
-	distance:float = 0.0
-	for i in range(numberColumns):
-		distance += (x[i] - y[i])**2
-	return distance
-
+	return np.linalg.norm(x-y)
 

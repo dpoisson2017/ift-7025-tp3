@@ -117,7 +117,7 @@ def load_wine_dataset(train_ratio):
     training_threshold = int(len(wine_data_records) * train_ratio)
     current_record_count = 0
     for record in wine_data_records:
-        data_label = record.pop()
+        data_label = int(record.pop())
         if current_record_count < training_threshold:
             train.append(record)
             train_labels.append(data_label)
@@ -170,7 +170,13 @@ def load_abalone_dataset(train_ratio):
     training_threshold = int(len(abalone_data_records) * train_ratio)
     current_record_count = 0
     for record in abalone_data_records:
-        data_label = record.pop()
+        data_label = int(float(record.pop()))
+        if (record[0] == 'M'):
+            record[0] = '1'
+        elif (record[0] == 'F'):
+            record[0] = '0'
+        else:
+            record[0] = '0.5'
         if current_record_count < training_threshold:
             train.append(record)
             train_labels.append(data_label)

@@ -9,6 +9,7 @@ se fera en utilisant les méthodes train, predict et evaluate de votre code.
 """
 
 import numpy as np
+import sklearn.metrics
 
 
 # le nom de votre classe
@@ -47,7 +48,7 @@ class Classifier: #nom de la class à changer
 		"""
         
 	def predictArray(self, data:np.ndarray) -> np.ndarray:
-		results = np.empty((np.shape(data)[0], 1), dtype=int)
+		results = np.empty((np.shape(data)[0],), dtype=int)
 		i:np.ndarray
 		for index, row in enumerate(data):
 			result = self.predict(row)
@@ -69,6 +70,7 @@ class Classifier: #nom de la class à changer
 		rates = {"TP":0, "FP":0, "TN":0, "FN":0}
 		class_recognition = dict()
 		prediction_results = self.predictArray(evaluation_data)
+		print(prediction_results)
 		for i in self.possibleClasses:
 			class_recognition[i] = rates.copy()
 		for index, resultasArray in enumerate(prediction_results):
@@ -91,15 +93,26 @@ class Classifier: #nom de la class à changer
 		
 		v:dict
 		print(class_recognition)
+		accuracies = []
 		for k, v in class_recognition.items():
 			print(f"Evaluation metrics for {k}\n")
 			accuracy = (v["TP"] + v["TN"])/(sum(v.values()))
+			accuracies.append(accuracy)
 			print(f"Accuracy: {accuracy}")
-			precision = (v["TP"])/(v["TP"] + v["FP"])
+			try:
+				precision = (v["TP"])/(v["TP"] + v["FP"])
+			except:
+				precision = "No true positive or false positive"
 			print(f"Precision: {precision}")
-			recall = (v["TP"])/(v["TP"] + v["FN"])
+			try:
+				recall = (v["TP"])/(v["TP"] + v["FN"])
+			except:
+				recall = "No true positive or false negative"
 			print(f"Recall: {recall}")
-			f1score = 2 * ((precision * recall) / (precision + recall))
+			try:
+				f1score = 2 * ((precision * recall) / (precision + recall))
+			except:
+				f1score = "recall or precision was invalid"
 			print(f"F1-score: {f1score}")
 			print("Confusion matrix")
 			matrix = f""" 
@@ -111,3 +124,4 @@ class Classifier: #nom de la class à changer
 |	{v["FP"]}	|	{v["TN"]}	| Negative
 |---------------|---------------|\n"""
 			print(matrix)
+		print(f"mean accuracy: {sklearn.metrics.accuracy_score(evaluation_labels, prediction_results)}")
