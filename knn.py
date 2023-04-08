@@ -27,7 +27,7 @@ class Knn(Classifier): #nom de la class à changer
 		"""
 		self.training_data: np.ndarray
 		self.training_labels: np.ndarray
-		self.k_threshold = kwargs['k']
+		self.k_neighbors = kwargs['k']
 		
 	def train(self, train, train_labels): #vous pouvez rajouter d'autres attributs au besoin
 		"""
@@ -64,12 +64,16 @@ class Knn(Classifier): #nom de la class à changer
 		for i in self.possibleClasses:
 			nearest_neighbours[i] = 0
 
-		for i in distances:
-			nearest_neighbours[i[1]] += 1
-			if nearest_neighbours[i[1]] >= self.k_threshold:
-				return i[1]
+		for i in range(self.k_neighbors):
+			value = distances[i]
+			nearest_neighbours[value[1]] += 1
 		
-		raise RuntimeError('Not enough training data for the k threshold of nearest neigbours')
+		maxValue = 0
+		maxClass = None
+		for k, v in nearest_neighbours.items():
+			if v > maxValue:
+				maxClass = k
+		return maxClass
 
 def calculateDistance(x:np.ndarray, y:np.ndarray):
 	numberColumns = x.size
