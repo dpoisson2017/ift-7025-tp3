@@ -27,13 +27,12 @@ scikit_bayes = GaussianNB()
 
 
 # Charger/lire les datasets
-iris_train, iris_train_label, iris_test, iris_test_label = load_datasets.load_iris_dataset(0.8)
+wine_train, wine_train_label, wine_test, wine_test_label = load_datasets.load_wine_dataset(0.8)
 
 
 # Entrainez votre classifieur
-bayesNaif.train(iris_train.astype(float, copy=False), iris_train_label)
-scikit_bayes.fit(iris_train.astype(float), iris_train_label)
-
+bayesNaif.train(wine_train.astype(float, copy=False), wine_train_label)
+scikit_bayes.fit(wine_train.astype(float), wine_train_label)
 
 """
 Après avoir fait l'entrainement, évaluez votre modèle sur 
@@ -47,10 +46,10 @@ IMPORTANT :
     - le F1-score
 """
 # Tester votre classifieur
-bayesNaif.evaluate(iris_train.astype(float, copy=False), iris_train_label)
+bayesNaif.evaluate(wine_train.astype(float, copy=False), wine_train_label)
 
-results1 = scikit_bayes.predict(iris_train.astype(float, copy=False))
-print(f"mean accuracy with sklearn GaussianNaiveBayes: {sklearn.metrics.accuracy_score(iris_train_label, results1)}")
+results1 = scikit_bayes.predict(wine_train.astype(float, copy=False))
+print(f"mean accuracy with sklearn knn: {sklearn.metrics.accuracy_score(wine_train_label, results1)}")
 
 
 """
@@ -63,6 +62,11 @@ IMPORTANT :
     - le rappel (recall)
     - le F1-score
 """
-bayesNaif.evaluate(iris_test.astype(float, copy=False), iris_test_label)
-results1 = scikit_bayes.predict(iris_test.astype(float, copy=False))
-print(f"mean accuracy with sklearn GaussianNaiveBayes: {sklearn.metrics.accuracy_score(iris_test_label, results1)}")
+bayesNaif.evaluate(wine_test.astype(float, copy=False), wine_test_label)
+
+results1 = scikit_bayes.predict(wine_test.astype(float, copy=False))
+print(f"mean accuracy with sklearn GaussianNaiveBayes: {sklearn.metrics.accuracy_score(wine_test_label, results1)}")
+
+
+
+

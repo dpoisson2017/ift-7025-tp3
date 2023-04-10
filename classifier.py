@@ -70,7 +70,7 @@ class Classifier: #nom de la class à changer
 		rates = {"TP":0, "FP":0, "TN":0, "FN":0}
 		class_recognition = dict()
 		prediction_results = self.predictArray(evaluation_data)
-		print(prediction_results) # output all predicted results for debugging purposes
+		#print(prediction_results) # output all predicted results for debugging purposes
 		for i in self.possibleClasses:
 			class_recognition[i] = rates.copy()
 		for index, resultasArray in enumerate(prediction_results):
@@ -92,7 +92,7 @@ class Classifier: #nom de la class à changer
 						class_recognition[i]["TN"] += 1
 		
 		v:dict
-		print(class_recognition)
+		#print(class_recognition) # For debugging
 		accuracies = []
 		for k, v in class_recognition.items():
 			print(f"Evaluation metrics for class: {k}")
