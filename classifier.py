@@ -9,6 +9,7 @@ se fera en utilisant les méthodes train, predict et evaluate de votre code.
 """
 
 import numpy as np
+import time
 import sklearn.metrics
 
 
@@ -48,11 +49,13 @@ class Classifier: #nom de la class à changer
 		"""
         
 	def predictArray(self, data:np.ndarray) -> np.ndarray:
+		startTime = time.time()
 		results = np.empty((np.shape(data)[0],), dtype=int)
 		i:np.ndarray
 		for index, row in enumerate(data):
 			result = self.predict(row)
 			results[index] = result
+		print("Elapsed time: " + str(time.time() - startTime))
 		return results
 
 	def evaluate(self, evaluation_data: np.ndarray, evaluation_labels: np.ndarray):
@@ -70,7 +73,7 @@ class Classifier: #nom de la class à changer
 		rates = {"TP":0, "FP":0, "TN":0, "FN":0}
 		class_recognition = dict()
 		prediction_results = self.predictArray(evaluation_data)
-		print(prediction_results)
+		#print(prediction_results) # output all predicted results for debugging purposes
 		for i in self.possibleClasses:
 			class_recognition[i] = rates.copy()
 		for index, resultasArray in enumerate(prediction_results):
@@ -92,10 +95,10 @@ class Classifier: #nom de la class à changer
 						class_recognition[i]["TN"] += 1
 		
 		v:dict
-		print(class_recognition)
+		#print(class_recognition) # For debugging
 		accuracies = []
 		for k, v in class_recognition.items():
-			print(f"Evaluation metrics for {k}\n")
+			print(f"Evaluation metrics for class: {k}")
 			accuracy = (v["TP"] + v["TN"])/(sum(v.values()))
 			accuracies.append(accuracy)
 			print(f"Accuracy: {accuracy}")
@@ -113,7 +116,7 @@ class Classifier: #nom de la class à changer
 				f1score = 2 * ((precision * recall) / (precision + recall))
 			except:
 				f1score = "recall or precision was invalid"
-			print(f"F1-score: {f1score}")
+			print(f"F1-score: {f1score}\n")
 			print("Confusion matrix")
 			matrix = f""" 
 	    Predicted
