@@ -1,7 +1,24 @@
-un fichier texte contenant une brève description des classes, la répartition
-des tâches de travail entre les membres d’équipe, et une explication des difficultés
-rencontrées dans ce travail.
+Équipe #31
+Julien Lafrance (111 268 508)
+David Poisson (905 302 625)
 
-S’il y a des erreurs ou des bogues dans votre code, mentionnez les, et expliquez les
-démarches que vous avez prises pour déboguer le code (cela vous permettra d’avoir
-des points même si votre code n’a pas fonctionné)
+Description des classes:
+load_datasets.py: Fichier qui permet de faire le chargement des datasets
+classifier.py: Classe de base qui permet d'établir la matrice de confusion
+Knn.py: Classificateur utilisant l'algorithme K nearest neighbors
+BayesNaif.py: Classificateur utilisant l'algorithme Bayes Naif
+
+Bugs connus:
+ - Aucun pour l'instant
+
+Difficultées rencontrées:
+ - Au niveau du Naif Bayes: Le fait que le data n'était pas comme dans les notes de cours / exercices, mais sous la forme
+   de donnée continue (float) m'a sérieusement compliqué la vie.
+
+Répartition du travail:
+David:
+    load_dataset, classificateur Bayes Naif, cross-validation, rapport
+Julien:
+    classifier (matrice de confusion), classificateur knn, rapport
+
+Fait à noté, Julien est clairement très fort en statistique, alors il a contre-vérifier l'ensemble des maths/formules.
