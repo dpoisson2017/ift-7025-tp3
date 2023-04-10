@@ -8,6 +8,7 @@ vous pouvez rajouter d'autres méthodes qui peuvent vous etre utiles, mais la co
 se fera en utilisant les méthodes train, predict et evaluate de votre code.
 """
 import math
+import time
 from classifier import Classifier
 
 # le nom de votre classe
@@ -41,6 +42,7 @@ class BayesNaif(Classifier): #nom de la class à changer
 
     """
     def train(self, train, train_labels): #vous pouvez rajouter d'autres attributs au besoin
+        startTime = time.time()
         self.training_data = train
         self.training_labels = train_labels
         self.possibleClasses = list(set(train_labels))
@@ -59,6 +61,7 @@ class BayesNaif(Classifier): #nom de la class à changer
                 variance = sum([(f - mean)**2 for f in featureValues]) / float(len(featureValues) - 1)
                 self.means[numClass].append(mean)
                 self.variances[numClass].append(variance)
+        print("Elapsed time: " + str(time.time() - startTime))
 
     """
     Prédire la classe d'un exemple x donné en entrée

@@ -9,6 +9,7 @@ se fera en utilisant les méthodes train, predict et evaluate de votre code.
 """
 
 import numpy as np
+import time
 import sklearn.metrics
 
 
@@ -48,11 +49,13 @@ class Classifier: #nom de la class à changer
 		"""
         
 	def predictArray(self, data:np.ndarray) -> np.ndarray:
+		startTime = time.time()
 		results = np.empty((np.shape(data)[0],), dtype=int)
 		i:np.ndarray
 		for index, row in enumerate(data):
 			result = self.predict(row)
 			results[index] = result
+		print("Elapsed time: " + str(time.time() - startTime))
 		return results
 
 	def evaluate(self, evaluation_data: np.ndarray, evaluation_labels: np.ndarray):
