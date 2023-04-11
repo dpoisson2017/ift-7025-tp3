@@ -3,11 +3,12 @@ Julien Lafrance (111 268 508)
 David Poisson (905 302 625)
 
 Description des classes:
-entrainer_tester.py: Fichier qui fait l'ordonnancement de l'entrainement et l'évaluation
+entrainer_tester.py: Fichier qui fait l'ordonnancement de l'entrainement et l'évaluation en appelant les runners
+*_runner.py: Contient tout pour exécuter un classificateur. Est appeler par entrainer_tester.py
 load_datasets.py: Fichier qui permet de faire le chargement des datasets
 classifier.py: Classe de base qui permet d'établir la matrice de confusion
-Knn.py: Classificateur utilisant l'algorithme K nearest neighbors
 BayesNaif.py: Classificateur utilisant l'algorithme Bayes Naif
+Knn.py: Classificateur utilisant l'algorithme K nearest neighbors
 crossValidation.py: Lancer du processus de cross-validation pour trouver les meilleurs valeurs K pour les 3 datasets.
     On doit manuellement modifier le dictionnaire bestKValueByDataset dans entrainer_tester.py avec les valeurs obtenues
 
