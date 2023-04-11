@@ -13,14 +13,18 @@ crossValidation.py: Lancer du processus de cross-validation pour trouver les mei
     On doit manuellement modifier le dictionnaire bestKValueByDataset dans entrainer_tester.py avec les valeurs obtenues
 
 Bugs connus:
- - Aucun pour l'instant
+ - Aucun
 
 Difficultées rencontrées:
- - Au niveau du Naif Bayes: Le fait que le data n'était pas comme dans les notes de cours / exercices, mais sous la forme
-   de donnée continue (float) m'a sérieusement compliqué la vie.
+ - Voir rapport
 
 Répartition du travail:
 David: load_dataset, classificateur Bayes Naif, cross-validation, rapport
 Julien: classifier (matrice de confusion), classificateur knn, rapport
 
-Fait à noté, Julien est clairement très fort en statistique, alors il a contre-vérifier l'ensemble des maths/formules.
+Commandes pratique pour exécution de la solution:
+python entrainer_tester.py
+
+Pour lancer la crossValidation (qui serait exécuté sur des données représentative afin de trouver le meilleur K, mais qui
+ne serait pas exécuté systématiquement à chaque exécution d'entrainer_test.py):
+python crossValidation.py
