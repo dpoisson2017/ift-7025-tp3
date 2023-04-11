@@ -253,7 +253,7 @@ def load_abalone_dataset(train_ratio):
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 
 
-def load_abalon_dataset_bins(numberBins):
+def load_abalone_dataset_bins(numberBins):
     """Cette fonction a pour but de lire le dataset Abalone
 
     Args:
@@ -307,7 +307,8 @@ def dataFromBins(records, totalNumberBins, binNumberForTesting):
     test_labels = []
 
     for binNumber in range(totalNumberBins):
-        for record in records[binNumber]:
+        recordsFromBin = records[binNumber]
+        for record in recordsFromBin:
             data_label = int(float(record.pop()))
 
             if binNumber != binNumberForTesting:
