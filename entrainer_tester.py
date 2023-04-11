@@ -7,12 +7,12 @@ from sklearn.neighbors import KNeighborsClassifier
 import sklearn.metrics
 
 TRAINING_THRESHOLD = 0.8
-NUMBER_NEAREST_NEIGHBORS = 5
 
 datasets = ['iris',
             'wine',
             'abalone']
 
+bestKValueByDataset = {'iris': 5, 'wine' : 5, 'abalone' : 5}
 
 
 print("Execution du classificateur Naif Baysien")
@@ -59,7 +59,7 @@ for dataset in datasets:
         train, train_label, test, test_label = load_datasets.load_abalone_dataset(TRAINING_THRESHOLD)
 
     print("Creation KNN classifier")
-    knneighbours = Knn(k=NUMBER_NEAREST_NEIGHBORS)
+    knneighbours = Knn(k=bestKValueByDataset[dataset])
     print("Training KNN classifier")
     knneighbours.train(train.astype(float, copy=False), train_label)
     print("Predicting KNN classifier")
@@ -77,3 +77,8 @@ for dataset in datasets:
     print("Evaluating scikit KNeighbors classifier")
     results1 = scikit_knn.predict(test.astype(float, copy=False))
     print(f"mean accuracy with sklearn KNeighbors: {sklearn.metrics.accuracy_score(test_label, results1)}")
+
+
+
+
+
