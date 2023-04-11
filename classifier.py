@@ -55,7 +55,7 @@ class Classifier: #nom de la class à changer
 		for index, row in enumerate(data):
 			result = self.predict(row)
 			results[index] = result
-		print("Elapsed time: " + str(time.time() - startTime))
+		print("Elapsed time predicting: " + str(time.time() - startTime))
 		return results
 
 	def evaluate(self, evaluation_data: np.ndarray, evaluation_labels: np.ndarray):
@@ -73,7 +73,6 @@ class Classifier: #nom de la class à changer
 		rates = {"TP":0, "FP":0, "TN":0, "FN":0}
 		class_recognition = dict()
 		prediction_results = self.predictArray(evaluation_data)
-		#print(prediction_results) # output all predicted results for debugging purposes
 		for i in self.possibleClasses:
 			class_recognition[i] = rates.copy()
 		for index, resultasArray in enumerate(prediction_results):
@@ -117,8 +116,7 @@ class Classifier: #nom de la class à changer
 			except:
 				f1score = "recall or precision was invalid"
 			print(f"F1-score: {f1score}\n")
-			print("Confusion matrix")
-			matrix = f""" 
+			matrix = f"""Confusion matrix 
 	    Predicted
     Positive	|    Negative
 |---------------|---------------|

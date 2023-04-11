@@ -44,11 +44,9 @@ class Knn(Classifier): #nom de la class à changer
 		les expliquer en commentaire
 		
 		"""
-		startTime = time.time()
 		self.training_data = train
 		self.training_labels = train_labels
 		self.possibleClasses = set(train_labels)
-		print("Elapsed time: " + str(time.time() - startTime))
 
         
 	def predict(self, x):

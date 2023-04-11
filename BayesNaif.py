@@ -61,7 +61,7 @@ class BayesNaif(Classifier): #nom de la class à changer
                 variance = sum([(f - mean)**2 for f in featureValues]) / float(len(featureValues) - 1)
                 self.means[numClass].append(mean)
                 self.variances[numClass].append(variance)
-        print("Elapsed time: " + str(time.time() - startTime))
+        print("Elapsed time training: " + str(time.time() - startTime))
 
     """
     Prédire la classe d'un exemple x donné en entrée
