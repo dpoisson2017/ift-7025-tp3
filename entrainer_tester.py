@@ -19,7 +19,7 @@ bestKValueByDataset = {'iris': 5, 'wine' : 5, 'abalone' : 5}
 
 
 
-bayes_runner.run(TRAINING_RATIO, datasets)
+bayes_runner.run(datasets, TRAINING_RATIO)
 
 print("\n")
 knn_runner.run(datasets, TRAINING_RATIO, NUMBER_NEAREST_NEIGHBORS)
