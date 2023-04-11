@@ -30,6 +30,7 @@ class Knn(Classifier): #nom de la class à changer
 		self.training_data: np.ndarray
 		self.training_labels: np.ndarray
 		self.k_neighbors = kwargs['k']
+		print("Classificateur Knn utilisant k = " + str(self.k_neighbors))
 		
 	def train(self, train, train_labels): #vous pouvez rajouter d'autres attributs au besoin
 		"""

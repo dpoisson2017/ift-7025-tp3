@@ -1,3 +1,5 @@
+from math import ceil
+
 import numpy as np
 import random
 
@@ -48,6 +50,7 @@ def load_iris_dataset(train_ratio):
     train_labels = []
     test = []
     test_labels = []
+
     training_threshold = int(len(iris_data_records) * train_ratio)
     current_record_count = 0
     for record in iris_data_records:
@@ -71,9 +74,42 @@ def load_iris_dataset(train_ratio):
     
     # Tres important : la fonction doit retourner 4 matrices (ou vecteurs) de type Numpy. 
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
-	
-	
-	
+
+
+def load_iris_dataset_bins(numberBins):
+    """Cette fonction a pour but de lire le dataset Iris
+
+    Args:
+        numberBins: le nombre de bins total qui divise le dataset
+
+
+    Retours:
+        Cette fonction doit retourner une liste de list.
+        Chaque élément de la liste est en fin une ligne dans le fichier
+    """
+
+    random.seed(1)  # Pour avoir les meme nombres aléatoires à chaque initialisation.
+
+    # Vous pouvez utiliser des valeurs numériques pour les différents types de classes, tel que :
+    conversion_labels = {'Iris-setosa': 0, 'Iris-versicolor': 1, 'Iris-virginica': 2}
+
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    iris_file = 'datasets/bezdekIris.data'
+    iris_data_records = []
+    with open(iris_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            # Convert labels
+            columns[4] = conversion_labels[columns[4]]
+            iris_data_records.append(columns)
+
+    # Randomize data order
+    random.shuffle(iris_data_records)
+
+    return splitInBins(iris_data_records, numberBins)
+
+
+
 def load_wine_dataset(train_ratio):
     """Cette fonction a pour but de lire le dataset Binary Wine quality
 
@@ -128,6 +164,34 @@ def load_wine_dataset(train_ratio):
 
 	# La fonction doit retourner 4 structures de données de type Numpy.
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
+
+def load_wine_dataset_bins(numberBins):
+    """Cette fonction a pour but de lire le dataset Wine
+
+    Args:
+        numberBins: le nombre de bins total qui divise le dataset
+
+
+    Retours:
+        Cette fonction doit retourner une liste de list.
+        Chaque élément de la liste est en fin une ligne dans le fichier
+    """
+
+    random.seed(1)  # Pour avoir les meme nombres aléatoires à chaque initialisation.
+
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    wine_file = 'datasets/binary-winequality-white.csv'
+    wine_data_records = []
+    with open(wine_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            wine_data_records.append(columns)
+
+    # Randomize data order
+    random.shuffle(wine_data_records)
+
+    return splitInBins(wine_data_records, numberBins)
+
 
 def load_abalone_dataset(train_ratio):
     """
@@ -185,5 +249,73 @@ def load_abalone_dataset(train_ratio):
             test_labels.append(data_label)
         current_record_count += 1
 
+
+    return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
+
+
+def load_abalone_dataset_bins(numberBins):
+    """Cette fonction a pour but de lire le dataset Abalone
+
+    Args:
+        numberBins: le nombre de bins total qui divise le dataset
+
+
+    Retours:
+        Cette fonction doit retourner une liste de list.
+        Chaque élément de la liste est en fin une ligne dans le fichier
+    """
+
+    random.seed(1)  # Pour avoir les meme nombres aléatoires à chaque initialisation.
+
+    # Le fichier du dataset est dans le dossier datasets en attaché
+    abalone_file = 'datasets/abalone-intervalles.csv'
+    abalone_data_records = []
+    with open(abalone_file) as file:
+        for line in file:
+            columns = line.rstrip().split(",")
+            if (columns[0] == 'M'):
+                columns[0] = '1'
+            elif (columns[0] == 'F'):
+                columns[0] = '0'
+            else:
+                columns[0] = '0.5'
+            abalone_data_records.append(columns)
+
+    # Randomize data order
+    random.shuffle(abalone_data_records)
+
+    return splitInBins(abalone_data_records, numberBins)
+
+
+
+def splitInBins(records, numberBins):
+    numberRecords = len(records)
+    average = numberRecords // numberBins
+    remainder = numberRecords % numberBins
+    result = []
+    start = 0
+    for i in range(numberBins):
+        end = start + average + (i < remainder)
+        result.append(records[start:end])
+        start = end
+    return result
+
+def dataFromBins(records, totalNumberBins, binNumberForTesting):
+    train = []
+    train_labels = []
+    test = []
+    test_labels = []
+
+    for binNumber in range(totalNumberBins):
+        recordsFromBin = records[binNumber]
+        for record in recordsFromBin:
+            data_label = int(float(record.pop()))
+
+            if binNumber != binNumberForTesting:
+                train.append(record)
+                train_labels.append(data_label)
+            else:
+                test.append(record)
+                test_labels.append(data_label)
 
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)

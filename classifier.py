@@ -113,8 +113,10 @@ class Classifier: #nom de la class à changer
 			print(f"Recall: {recall}")
 			try:
 				f1score = 2 * ((precision * recall) / (precision + recall))
+				self.f1_score = f1score
 			except:
 				f1score = "recall or precision was invalid"
+				self.f1_score = 0
 			print(f"F1-score: {f1score}\n")
 			matrix = f"""Confusion matrix 
 	    Predicted

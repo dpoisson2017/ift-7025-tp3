@@ -3,10 +3,13 @@ Julien Lafrance (111 268 508)
 David Poisson (905 302 625)
 
 Description des classes:
+entrainer_tester.py: Fichier qui fait l'ordonnancement de l'entrainement et l'évaluation
 load_datasets.py: Fichier qui permet de faire le chargement des datasets
 classifier.py: Classe de base qui permet d'établir la matrice de confusion
 Knn.py: Classificateur utilisant l'algorithme K nearest neighbors
 BayesNaif.py: Classificateur utilisant l'algorithme Bayes Naif
+crossValidation.py: Lancer du processus de cross-validation pour trouver les meilleurs valeurs K pour les 3 datasets.
+    On doit manuellement modifier le dictionnaire bestKValueByDataset dans entrainer_tester.py avec les valeurs obtenues
 
 Bugs connus:
  - Aucun pour l'instant
@@ -16,9 +19,7 @@ Difficultées rencontrées:
    de donnée continue (float) m'a sérieusement compliqué la vie.
 
 Répartition du travail:
-David:
-    load_dataset, classificateur Bayes Naif, cross-validation, rapport
-Julien:
-    classifier (matrice de confusion), classificateur knn, rapport
+David: load_dataset, classificateur Bayes Naif, cross-validation, rapport
+Julien: classifier (matrice de confusion), classificateur knn, rapport
 
 Fait à noté, Julien est clairement très fort en statistique, alors il a contre-vérifier l'ensemble des maths/formules.

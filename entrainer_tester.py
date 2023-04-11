@@ -8,17 +8,18 @@ from sklearn.neighbors import KNeighborsClassifier
 import sklearn.metrics
 import knn_runner
 import bayes_runner
-training_ratio = 0.8
+TRAINING_RATIO = 0.8
 NUMBER_NEAREST_NEIGHBORS = 5
 
 datasets = ['iris',
             'wine',
             'abalone']
 
+bestKValueByDataset = {'iris': 5, 'wine' : 5, 'abalone' : 5}
 
 
 
-bayes_runner.run(training_ratio, datasets)
+bayes_runner.run(TRAINING_RATIO, datasets)
 
 print("\n")
-knn_runner.run(datasets, training_ratio, NUMBER_NEAREST_NEIGHBORS)
+knn_runner.run(datasets, TRAINING_RATIO, NUMBER_NEAREST_NEIGHBORS)
