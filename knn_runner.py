@@ -5,14 +5,14 @@ import load_datasets
 import scikit_evaluator
 
 TRAINING_RATIO = 0.8
-NUMBER_NEAREST_NEIGHBORS = 5
+bestKValueByDataset = {'iris': 5, 'wine': 5, 'abalone': 5}
 
 DATASETS = ['iris',
             'wine',
             'abalone']
 
 
-def run(datasets, training_ratio, number_nearest_neighbors):
+def run(datasets, training_ratio):
     print("Execution du classificateur K nearest neighbors (KNN)")
     for dataset in datasets:
         print(f"Dataset: {dataset}")
@@ -24,7 +24,7 @@ def run(datasets, training_ratio, number_nearest_neighbors):
         elif dataset == 'abalone':
             train, train_label, test, test_label = load_datasets.load_abalone_dataset(training_ratio)
 
-        knneighbours = Knn(k=number_nearest_neighbors)
+        knneighbours = Knn(k=bestKValueByDataset[dataset])
         knneighbours.train(train.astype(float, copy=False), train_label)
         print(f"Evaluating KNN classifier on train {dataset} \n")
         #knneighbours.evaluate(train.astype(float, copy=False), train_label)
@@ -48,4 +48,4 @@ def run(datasets, training_ratio, number_nearest_neighbors):
         print(f"elapsed_time: {elapsed_time}\n")
 
 if __name__ == "__main__":
-    run(DATASETS[2:3], TRAINING_RATIO, NUMBER_NEAREST_NEIGHBORS)
+    run(DATASETS[2:3], TRAINING_RATIO)
