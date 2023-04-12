@@ -2,7 +2,7 @@ import load_datasets
 #importer d'autres fichiers et classes si vous en avez développés
 from knn import Knn
 
-NUMBER_BINS = 4
+NUMBER_FOLDS = 4
 K_MIN = 5
 K_MAX = 6
 
@@ -18,20 +18,20 @@ for dataset in datasets:
     l_errors = list()
     for kValue in range(K_MIN, K_MAX):
         sumScores = 0
-        for bin in range(NUMBER_BINS):
-            print("Calculating for k = " + str(kValue) + " bin = " + str(bin))
+        for fold in range(NUMBER_FOLDS):
+            print("Calculating for k = " + str(kValue) + " fold = " + str(fold))
             if dataset == 'iris':
-                dataBins = load_datasets.load_iris_dataset_bins(NUMBER_BINS)
+                dataFolds = load_datasets.load_iris_dataset_folds(NUMBER_FOLDS)
             elif dataset == 'wine':
-                dataBins = load_datasets.load_wine_dataset_bins(NUMBER_BINS)
+                dataFolds = load_datasets.load_wine_dataset_folds(NUMBER_FOLDS)
             elif dataset == 'abalone':
-                dataBins = load_datasets.load_abalone_dataset_bins(NUMBER_BINS)
-            train, train_label, test, test_label = load_datasets.dataFromBins(dataBins, NUMBER_BINS, bin)
+                dataFolds = load_datasets.load_abalone_dataset_folds(NUMBER_FOLDS)
+            train, train_label, test, test_label = load_datasets.dataFromFolds(dataFolds, NUMBER_FOLDS, fold)
             knneighbours = Knn(k=kValue)
             knneighbours.train(train.astype(float, copy=False), train_label)
             knneighbours.evaluate(test.astype(float, copy=False), test_label)
             sumScores += knneighbours.f1_score
-        avgScore = float(sumScores) / NUMBER_BINS
+        avgScore = float(sumScores) / NUMBER_FOLDS
         l_errors.append((avgScore, kValue))
 
     # Take the kValue of the highest F1 score

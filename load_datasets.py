@@ -76,11 +76,11 @@ def load_iris_dataset(train_ratio):
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 
 
-def load_iris_dataset_bins(numberBins):
+def load_iris_dataset_folds(numberFolds):
     """Cette fonction a pour but de lire le dataset Iris
 
     Args:
-        numberBins: le nombre de bins total qui divise le dataset
+        numberFolds: le nombre de folds total qui divise le dataset
 
 
     Retours:
@@ -106,7 +106,7 @@ def load_iris_dataset_bins(numberBins):
     # Randomize data order
     random.shuffle(iris_data_records)
 
-    return splitInBins(iris_data_records, numberBins)
+    return splitInFolds(iris_data_records, numberFolds)
 
 
 
@@ -165,11 +165,11 @@ def load_wine_dataset(train_ratio):
 	# La fonction doit retourner 4 structures de données de type Numpy.
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 
-def load_wine_dataset_bins(numberBins):
+def load_wine_dataset_folds(numberFolds):
     """Cette fonction a pour but de lire le dataset Wine
 
     Args:
-        numberBins: le nombre de bins total qui divise le dataset
+        numberFolds: le nombre de folds total qui divise le dataset
 
 
     Retours:
@@ -190,7 +190,7 @@ def load_wine_dataset_bins(numberBins):
     # Randomize data order
     random.shuffle(wine_data_records)
 
-    return splitInBins(wine_data_records, numberBins)
+    return splitInFolds(wine_data_records, numberFolds)
 
 
 def load_abalone_dataset(train_ratio):
@@ -253,11 +253,11 @@ def load_abalone_dataset(train_ratio):
     return np.array(train), np.array(train_labels), np.array(test), np.array(test_labels)
 
 
-def load_abalone_dataset_bins(numberBins):
+def load_abalone_dataset_folds(numberFolds):
     """Cette fonction a pour but de lire le dataset Abalone
 
     Args:
-        numberBins: le nombre de bins total qui divise le dataset
+        numberFolds: le nombre de folds total qui divise le dataset
 
 
     Retours:
@@ -284,34 +284,34 @@ def load_abalone_dataset_bins(numberBins):
     # Randomize data order
     random.shuffle(abalone_data_records)
 
-    return splitInBins(abalone_data_records, numberBins)
+    return splitInFolds(abalone_data_records, numberFolds)
 
 
 
-def splitInBins(records, numberBins):
+def splitInFolds(records, numberFolds):
     numberRecords = len(records)
-    average = numberRecords // numberBins
-    remainder = numberRecords % numberBins
+    average = numberRecords // numberFolds
+    remainder = numberRecords % numberFolds
     result = []
     start = 0
-    for i in range(numberBins):
+    for i in range(numberFolds):
         end = start + average + (i < remainder)
         result.append(records[start:end])
         start = end
     return result
 
-def dataFromBins(records, totalNumberBins, binNumberForTesting):
+def dataFromFolds(records, totalNumberFolds, foldNumberForTesting):
     train = []
     train_labels = []
     test = []
     test_labels = []
 
-    for binNumber in range(totalNumberBins):
-        recordsFromBin = records[binNumber]
-        for record in recordsFromBin:
+    for foldNumber in range(totalNumberFolds):
+        recordsFromFold = records[foldNumber]
+        for record in recordsFromFold:
             data_label = int(float(record.pop()))
 
-            if binNumber != binNumberForTesting:
+            if foldNumber != foldNumberForTesting:
                 train.append(record)
                 train_labels.append(data_label)
             else:
