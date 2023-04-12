@@ -2,15 +2,15 @@ import load_datasets
 #importer d'autres fichiers et classes si vous en avez développés
 from knn import Knn
 
-NUMBER_FOLDS = 4
+NUMBER_FOLDS = 10
 K_MIN = 5
-K_MAX = 6
+K_MAX = 10
 
 datasets = ['iris',
             'wine',
             'abalone']
 
-bestKValueByDataset = {'iris': -1, 'wine' : -1, 'abalone' : -1}
+bestKValueByDataset = {'iris': -1, 'wine': -1, 'abalone': -1}
 
 print("Starting cross-validation to find best k-value")
 for dataset in datasets:
